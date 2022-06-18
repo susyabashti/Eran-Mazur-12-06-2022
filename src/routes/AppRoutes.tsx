@@ -24,6 +24,7 @@ export const AppRoutes = () => (
 
 const AppContainer = tw.div`
   bg-white
+  dark:bg-zinc-900
   grid
   content-start
   min-h-screen

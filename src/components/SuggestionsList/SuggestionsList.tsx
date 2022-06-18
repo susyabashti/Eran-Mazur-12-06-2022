@@ -31,7 +31,9 @@ const SuggestionList = tw.div`
   z-20
   inset-y-20
   overflow-y-auto
-  bg-blue-100
+  bg-slate-200
+  dark:bg-zinc-600
+  dark:text-white
   p-1
   h-fit
   max-h-32
@@ -44,7 +46,8 @@ const SuggestionKey = tw.button`
   block
   p-2
   rounded-lg
-  hover:bg-blue-200
+  hover:bg-slate-300
+  dark:hover:bg-zinc-500
   w-full
   text-left
 `;

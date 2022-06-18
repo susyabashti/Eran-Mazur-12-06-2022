@@ -6,6 +6,7 @@ import { UserState, MessageValues } from "@store/types/userTypes";
 const initialState: UserState = {
   notification: null,
   isMetric: true,
+  isDark: false,
   userLocation: DEFAULT_CITY,
   firstLoad: true,
 };
@@ -23,11 +24,12 @@ export const userSlice = createSlice({
     toggleMetric(state) {
       state.isMetric = !state.isMetric;
     },
-
+    toggleDark(state) {
+      state.isDark = !state.isDark;
+    },
     setUserLocation(state, { payload }: PayloadAction<Suggestion>) {
       state.userLocation = payload;
     },
-
     setFirstLoadState(state, { payload }: PayloadAction<boolean>) {
       state.firstLoad = payload;
     },

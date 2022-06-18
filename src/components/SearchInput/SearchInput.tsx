@@ -79,29 +79,33 @@ const SearchContainer = tw.form`
   self-center
   relative
   w-full
-  lg:w-80
+  lg:w-96
   lg:self-start
 `;
 
 const SearchButton = tw.button`
   absolute
-  right-3
+  right-2
   inset-y-0
   flex
   items-center
   pr-2
+  pl-1
   hover:scale-150
   transition
+  active:text-pink-600
+  dark:text-white
+  dark:active:text-pink-600
 `;
 
 const SearchIcon = tw(AiOutlineSearch)`
-  text-xl
+  text-2xl
 `;
 
 const Input = tw.input`
-  bg-blue-100
+  bg-slate-200
+  dark:bg-zinc-800
   h-16
-  rounded-3xl
   pl-8
   pr-12
   text-lg
@@ -114,4 +118,7 @@ const Input = tw.input`
   focus:ring-1
   focus:border-blue-500
   focus:ring-blue-500
+  dark:focus:border-zinc-400
+  dark:focus:ring-zinc-700
+  rounded-3xl
 `;

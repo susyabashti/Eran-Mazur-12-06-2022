@@ -14,6 +14,7 @@ export type MessageValues = {
 export interface UserState {
   notification: MessageValues | null;
   isMetric: boolean;
+  isDark: boolean;
   firstLoad: boolean;
   userLocation: Suggestion | null;
 }

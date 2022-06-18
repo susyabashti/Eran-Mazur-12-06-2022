@@ -21,7 +21,7 @@ export const NavItem = ({ toPath, name }: NavItemProps) => {
 
 const NavRoute = tw(NavLink)`
   ${(p: { $isActive: boolean }) =>
-    p.$isActive ? "bg-gradient-to-r text-white" : "bg-white"}
+    p.$isActive ? "bg-gradient-to-r text-white" : "bg-gray-100 text-black"}
   w-1/2
   h-20
   flex
@@ -41,4 +41,6 @@ const NavRoute = tw(NavLink)`
   md:text-left
   md:pl-5
   md:justify-start
+  dark:bg-zinc-800
+  dark:text-white
 `;

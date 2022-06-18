@@ -111,7 +111,7 @@ const DescriptionBlock = tw(FloatingContainer)`
 `;
 
 const DayDescription = tw(DescriptionBlock)`
-  bg-gradient-to-tr
+  bg-gradient-to-br
   from-yellow-300
   to-amber-500
 `;

@@ -4,17 +4,35 @@ import { HiMenu } from "react-icons/hi";
 import { Text } from "@components/Text/Text";
 import RainbowLogo from "@assets/rainbow.png";
 import { useAppDispatch, useAppSelector } from "@store/hooks/hooks";
-import { selectMetricState } from "@store/selectors/selectors";
+import {
+  selectDarkModeState,
+  selectMetricState,
+} from "@store/selectors/selectors";
 import { userActions } from "@store/slices/user";
-import { TbTemperatureCelsius, TbTemperatureFahrenheit } from "react-icons/tb";
+import {
+  TbTemperatureCelsius,
+  TbTemperatureFahrenheit,
+  TbSun,
+  TbMoon,
+} from "react-icons/tb";
 import { NavItem } from "./NavItem";
 
 export const Navbar = () => {
   const dispatch = useAppDispatch();
   const isMetric = useAppSelector(selectMetricState);
+  const isDark = useAppSelector(selectDarkModeState);
   const [settingsMenu, setSettingsMenu] = React.useState(false);
 
   const buttonToggleMetric = () => dispatch(userActions.toggleMetric());
+  const buttonToggleDark = () => {
+    if (isDark) {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+
+    dispatch(userActions.toggleDark());
+  };
 
   const closeSettings = React.useCallback(() => {
     if (!settingsMenu) return;
@@ -31,16 +49,21 @@ export const Navbar = () => {
   return (
     <NavbarContainer>
       <NavbarWrapper>
-        <IconButton onClick={openSettings}>
+        <NavButton onClick={openSettings}>
           <HiMenu />
-        </IconButton>
+        </NavButton>
         <AppName>
           <Logo src={RainbowLogo} />
           <TitleText text="Weather App" />
         </AppName>
-        <IconButton onClick={buttonToggleMetric}>
-          {isMetric ? <TbTemperatureCelsius /> : <TbTemperatureFahrenheit />}
-        </IconButton>
+        <SettingsButtons>
+          <IconButton onClick={buttonToggleMetric}>
+            {isMetric ? <TbTemperatureCelsius /> : <TbTemperatureFahrenheit />}
+          </IconButton>
+          <IconButton onClick={buttonToggleDark}>
+            {isDark ? <TbMoon /> : <TbSun />}
+          </IconButton>
+        </SettingsButtons>
         <NavMenuBlur $display={settingsMenu} onClick={closeSettings}>
           <NavList>
             <NavItem toPath="/" name="Home" />
@@ -54,6 +77,8 @@ export const Navbar = () => {
 
 const NavbarContainer = tw.div`
   bg-white
+  dark:bg-zinc-900
+  dark:text-white
   shadow-sm
   container-fluid
   md:w-96
@@ -64,6 +89,7 @@ const NavbarContainer = tw.div`
   md:relative
   md:min-h-fit
   md:border-r
+  dark:md:border-r-zinc-800
 `;
 
 const NavbarWrapper = tw.div`
@@ -79,6 +105,8 @@ const NavbarWrapper = tw.div`
 
 const AppName = tw.div`
   md:mb-8
+  grid
+  w-full
 `;
 
 const Logo = tw.img`
@@ -88,6 +116,7 @@ const Logo = tw.img`
 `;
 
 const TitleText = tw(Text)`
+  mx-auto
   text-3xl
   md:text-4xl
   font-bold
@@ -102,9 +131,23 @@ const TitleText = tw(Text)`
 const IconButton = tw.button`
   text-4xl
   hover:text-pink-600
-  hover:scale-110
+  hover:scale-105
+  active:scale-125
   transition
+`;
+
+const NavButton = tw(IconButton)`
   md:hidden
+`;
+
+const SettingsButtons = tw.div`
+  grid
+  gap-2
+  md:grid-flow-col
+  md:gap-5
+  md:mb-10
+  md:w-full
+  md:justify-center
 `;
 
 const NavMenuBlur = tw.div`

@@ -36,7 +36,6 @@ export const CityWeather = () => {
     if (isFirstLoad) {
       dispatch(getUserLocation());
     } else {
-      console.log(cityRequested);
       dispatch(checkSuggestion(cityRequested));
     }
   }, [isFirstLoad, cityRequested, dispatch]);

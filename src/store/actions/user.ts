@@ -37,7 +37,6 @@ export const getUserLocation = () => (dispatch: Dispatch) => {
         try {
           await getLocation();
         } catch (error) {
-          console.log(error);
           dispatch(
             userActions.setMessage({
               content: "An error has occured!",

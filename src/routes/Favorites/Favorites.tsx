@@ -62,7 +62,9 @@ const FavoritesContainer = tw.div`
     container
     mx-auto
     grid
-    grid-cols-2
+    grid-cols-1
+    md:grid-cols-2
+    lg:grid-cols-3
     xl:grid-cols-4
     gap-5
 `;
@@ -74,6 +76,7 @@ const FavoriteCard = tw(FloatingContainer)`
   text-center
   cursor-pointer
   hover:bg-gray-300
+  dark:hover:bg-zinc-700
 `;
 
 const CityName = tw(LocationName)`

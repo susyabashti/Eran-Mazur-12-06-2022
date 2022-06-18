@@ -13,22 +13,25 @@ export const getUserLocation = () => (dispatch: Dispatch) => {
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        console.log(pos.coords.latitude);
-        console.log(pos.coords.longitude);
-
         const getLocation = async () => {
-          const { data } = await axios.get<LocationResponseData>(
-            `${import.meta.env.VITE_URL_LOCATION}?toplevel=true&apikey=${
-              import.meta.env.VITE_API_KEY
-            }&q=${pos.coords.latitude},${pos.coords.longitude}`
-          );
+          try {
+            const { data } = await axios.get<LocationResponseData>(
+              `${import.meta.env.VITE_URL_LOCATION}?toplevel=true&apikey=${
+                import.meta.env.VITE_API_KEY
+              }&q=${pos.coords.latitude},${pos.coords.longitude}`
+            );
 
-          dispatch(
-            userActions.setUserLocation({
-              key: data.Key,
-              name: data.LocalizedName,
-            })
-          );
+            if (typeof data.Key !== "undefined") {
+              dispatch(
+                userActions.setUserLocation({
+                  key: data.Key,
+                  name: data.LocalizedName,
+                })
+              );
+            }
+          } catch (error) {
+            throw Error("Couldn't retrieve data..");
+          }
         };
 
         try {

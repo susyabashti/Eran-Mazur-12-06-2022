@@ -24,12 +24,13 @@ export const AppRoutes = () => (
 
 const AppContainer = tw.div`
   bg-white
-  dark:bg-zinc-900
   grid
   content-start
   min-h-screen
   md:flex
   md:flex-row
+  dark:bg-zinc-900
+  dark:text-white
 `;
 
 const RoutesContainer = tw.div`

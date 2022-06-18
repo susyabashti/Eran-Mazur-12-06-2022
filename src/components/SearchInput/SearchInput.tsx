@@ -114,11 +114,12 @@ const Input = tw.input`
   duration-200
   ease-in
   placeholder:font-light
+  placholder:text-white
   focus:outline-none
   focus:ring-1
+  rounded-3xl
   focus:border-blue-500
   focus:ring-blue-500
   dark:focus:border-zinc-400
   dark:focus:ring-zinc-700
-  rounded-3xl
 `;

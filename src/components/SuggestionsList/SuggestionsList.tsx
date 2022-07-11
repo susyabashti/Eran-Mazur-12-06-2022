@@ -4,7 +4,7 @@ import tw from "tailwind-styled-components";
 
 interface SuggestionsListProps {
   suggestions: SuggestionListType;
-  clickFunc: (event: React.SyntheticEvent, selected: Suggestion) => void;
+  clickFunc: (selected: Suggestion) => void;
 }
 
 export const SuggestionsList = React.memo(
@@ -12,12 +12,7 @@ export const SuggestionsList = React.memo(
     return (
       <SuggestionList>
         {suggestions.map((item) => (
-          <SuggestionKey
-            key={item.key}
-            onMouseDown={(event: React.SyntheticEvent) =>
-              clickFunc(event, item)
-            }
-          >
+          <SuggestionKey key={item.key} onMouseDown={() => clickFunc(item)}>
             {item.name}
           </SuggestionKey>
         ))}

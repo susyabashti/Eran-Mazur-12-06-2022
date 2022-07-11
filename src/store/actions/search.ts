@@ -36,13 +36,15 @@ type AutocompleteResponseData = {
 type AutocompleteResponseType = AutocompleteResponseData[];
 
 export const fillSuggestions =
-  (searchInput: string) => async (dispatch: Dispatch) => {
+  (controller: AbortController | null, searchInput: string) =>
+  async (dispatch: Dispatch) => {
     const retrieveSuggestions = async () => {
       try {
         const { data } = await axios.get<AutocompleteResponseType>(
           `${import.meta.env.VITE_URL_AUTOCOMPLETE}?q=${searchInput}&apikey=${
             import.meta.env.VITE_API_KEY
-          }`
+          }`,
+          { signal: controller?.signal }
         );
 
         let listSuggestions: SuggestionListType = [];
@@ -57,6 +59,7 @@ export const fillSuggestions =
         });
         dispatch(searchActions.setSuggestions(listSuggestions));
       } catch (error) {
+        console.log(error);
         throw Error("Couldn't retrieve cities..");
       }
     };

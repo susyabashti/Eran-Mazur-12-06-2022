@@ -14,37 +14,35 @@ export const SearchInput = () => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const debounce = React.useRef<number | undefined>(undefined);
   const [isFocused, setFocus] = React.useState(false);
+  const axiosController = React.useRef<AbortController | null>(
+    new AbortController()
+  );
 
   const showSuggestions = () => setFocus(true);
   const hideSuggestions = () => setFocus(false);
 
-  const checkSearch = React.useCallback(
-    (e: React.SyntheticEvent) => {
-      const searchInput = (e.target as HTMLInputElement).value;
-      clearTimeout(debounce.current);
+  const checkSearch = () => {
+    clearTimeout(debounce.current);
 
-      debounce.current = setTimeout(() => {
-        if (!searchInput.length) return;
+    debounce.current = setTimeout(() => {
+      if (!inputRef.current?.value.length) return;
+      axiosController.current?.abort();
+      axiosController.current = new AbortController();
 
-        dispatch(fillSuggestions(searchInput));
-      }, 400);
-    },
-    [debounce, dispatch]
-  );
+      dispatch(
+        fillSuggestions(axiosController.current, inputRef.current.value)
+      );
+    }, 400);
+  };
 
-  const submitSelection = React.useCallback(
-    (e: React.SyntheticEvent, selected: Suggestion) => {
-      e.preventDefault();
+  const submitSelection = (selected: Suggestion) => {
+    if (!selected) return;
 
-      if (!selected) return;
+    if (inputRef.current) inputRef.current.value = "";
 
-      if (inputRef.current) inputRef.current.value = "";
-
-      dispatch(checkSuggestion(selected));
-      dispatch(searchActions.resetSuggestions());
-    },
-    [inputRef, dispatch]
-  );
+    dispatch(checkSuggestion(selected));
+    dispatch(searchActions.resetSuggestions());
+  };
 
   return (
     <SearchContainer>
@@ -52,14 +50,15 @@ export const SearchInput = () => {
         ref={inputRef}
         type="text"
         placeholder="Enter a city name"
-        onChange={checkSearch}
+        onChange={() => checkSearch()}
         onFocus={showSuggestions}
         onBlur={hideSuggestions}
       />
       <SearchButton
-        onClick={(event: React.SyntheticEvent) =>
-          submitSelection(event, searchSuggestions[0])
-        }
+        onClick={(e: React.SyntheticEvent) => {
+          e.preventDefault();
+          submitSelection(searchSuggestions[0]);
+        }}
       >
         <SearchIcon />
       </SearchButton>

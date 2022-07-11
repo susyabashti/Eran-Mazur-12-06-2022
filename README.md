@@ -1,3 +1,3 @@
-# Eran-Mazur-12-06-2022
+# Weather App
 
-Check it out at: https://em-wp.vercel.app/
+A simple weather app built as part of a work task.
